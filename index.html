@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper scissors</title>
+    <link rel="stylesheet"href="style.css">
+</head>
+<body>
+    <section class="game">
+        <!-- Title --> 
+        <div class="title">Rock Paper Scissor</div>
+
+        <!--Display Score of player and computer -->
+        <div class="score">
+            <div class="playerScore">
+                <h2>player</h2>
+                <p class="p-count count">0</p>
+            </div>
+            <div class="computerScore">
+                <h2>computer</h2>
+                <p class="c-count count">0</p>
+            </div>
+        </div>
+        <div class="move">Choose your move</div>
+        <!--Option available to player to play game -->
+        <div class="options">
+            <button class="rock">Rock</button>
+            <button class="paper">Paper</button>
+            <button class="scissor">Scissors</button>
+        </div>
+        <!--final result of game -->
+        <div class="result"></div>
+
+        <!--Reload the game -->
+        <div class="result"></div>
+    </section>
+    <script>
+        const game = () => {
+            let playerScore = 0;
+        let computerScore = 0;
+    let moves = 0;
+    const playGame = () => {
+        const rockBtn = document.querySelector('.rock');
+        const paperBtn = document.querySelector('.paper');
+        const scissorBtn = document.querySelector('.scissor');
+        const playerOptions= [rockBtn, paperBtn,scissorBtn];
+        const computerOptions= ['rock','paper','scissors']
+
+        playerOptions.forEach(option => {
+            option.addEventListener('click',function(){
+            const movesLeft = document.querySelector('.movesLeft');
+            moves++;
+            movesLeft.innerText = `Moves Left: ${10-moves}`;
+
+            const choiceNumber=  Math.floor(Math.random()*3);
+            const computerChoice = computerOptions[choiceNumber];
+            winner(this.innerText,computerchoice)
+
+            if(moves == 10){
+                gameOver(playerOptions, movesLeft);
+
+            }
+            
+            })
+        
+        })
+    }
+        const winner = (player, computer) => {
+            const result = document.querySelector('.result');
+            const playerScoreBoard = document.querySelector('.p-count');
+            const computerScoreBoard = document.querySelector('.c-count');
+            player = player.toLowerCase();
+            computer = computer.toLowerCase();
+            if(player === computer){
+                result.textContent ='Tie'
+            }
+            else if(player == 'rock'){
+                if(computer == 'paper'){
+                    result.textContent = 'Computer Won';
+                    computerScore++;
+                    computerScoreBoard.textContent = computerScore;
+                } else{
+                    result.textContent = 'Player Won'
+                    playerScore++;
+                    playerScoreBoard.textContent = playerScore;
+                }
+            }
+            else if (player == 'scissors'){
+                if(computer == 'rock'){
+                    result.textContent = 'Computer Won';
+                    computerScore++;
+                    computerScoreBoard.textContent = computerScore;
+                }
+                else {
+                    result.textContent = 'Player Won';
+                    playerScore++;
+                    playerScoreBoard.textContent =playerScore;
+            }
+            }
+            else if (player='paper'){
+                if(computer= ' scissors'){
+                    result.textContent = 'Computer Won';
+                    computer++
+                    computerScoreBoard.textContent = computerScore;
+                }
+                else {
+                    result.textContent = 'Player Won';
+                    playerScore++;
+                    playerScoreBoard.textContent =playerScore;
+            
+            }
+        }
+    }
+        const gameOver = (playerOptions,movesLeft) =>{
+            const chooseMove =document.querySelector('.move');
+            const result = document.querySelector('.result');
+            const reloadBtn = document.querySelector('.reload');
+
+            playerOptions.forEach(option => {
+                option.style.display = 'none';
+
+                        })
+                        chooseMove.innerText = 'Game Over!!'
+                        movesLeft.style.display = 'none';
+
+                        if (playerScore > computerScore){
+                            result.style.fontSize = '2rem';
+                            result.innerText = 'you Won The Game'
+                            result.style.color =' #308D46';
+                        }
+                        else if (playerScore < computerScore){
+                            result.style.fontSize = '2rem';
+                            result.innerText = 'you Lost The Game'
+                            result.style.color ='red';
+                        }
+                        else {
+                            result.style.fontSize = '2rem';
+                            result.innerText = 'Tie'
+                            result.style.color ='grey';
+                        }
+                        reloadBtn.innerText = 'Restart';
+                        reloadBtn.style.display = 'flex';
+                        reloadBtn.addEventListener('click',()=>{
+                            window.location.reload();
+                        })
+        }
+        playGame();
+     
+    
+    }
+    game();
+
+    </script>
+    <script src="/game.js"></script>
+
+</body>
+</html>
